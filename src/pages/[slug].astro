@@ -1,0 +1,11 @@
+---
+import ServicePage from "../layouts/ServicePage.astro";
+import { PAGES } from "../data/pages";
+import type { PageData } from "../data/types";
+
+export function getStaticPaths() {
+  return PAGES.map((page) => ({ params: { slug: page.slug }, props: { page } }));
+}
+const { page } = Astro.props as { page: PageData };
+---
+<ServicePage page={page} />

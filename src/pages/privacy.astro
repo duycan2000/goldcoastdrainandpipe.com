@@ -1,0 +1,23 @@
+---
+import Base from "../layouts/Base.astro";
+import { SITE } from "../config";
+---
+<Base title={`Privacy policy | ${SITE.brand}`} description={`How ${SITE.brand} collects, uses and shares your details.`} path="/privacy">
+  <section class="section">
+    <div class="wrap measure legal">
+      <h1>Privacy policy</h1>
+      <p>Last updated: 28 October 2026</p>
+      <h2>Who we are</h2>
+      <p>{SITE.brand} is a referral service operated by {SITE.operator}. We connect people on the Gold Coast with independent, licensed plumbers.</p>
+      <h2>What we collect</h2>
+      <p>When you call us or send the callback form, we collect what you give us: your name, phone number, suburb, the problem and any notes. Calls through our number are logged and may be recorded so we can check service quality and resolve disputes. We also keep basic technical data such as the page you sent the form from.</p>
+      <h2>How we use it</h2>
+      <p>We pass your details to one licensed plumber so they can contact you about your job. We don't sell your details or send them to multiple companies, and we don't use them for marketing.</p>
+      <h2>How long we keep it</h2>
+      <p>Enquiry records and call logs are deleted automatically after 12 months.</p>
+      <h2>Your choices</h2>
+      <p>You can ask to see, correct or delete your details by emailing <a href={`mailto:${SITE.email}`}>{SITE.email}</a>. If you're not happy with how we handled your information, you can contact the Office of the Australian Information Commissioner.</p>
+    </div>
+  </section>
+</Base>
+<style>.legal h1 { font-size: clamp(2.6rem, 6vw, 3.6rem); } .legal h2 { font-size: 1.7rem; margin-top: 1.8rem; }</style>

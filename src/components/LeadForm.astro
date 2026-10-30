@@ -1,0 +1,80 @@
+---
+import { PROBLEMS, ALL_SUBURBS } from "../config";
+interface Props { id?: string; title?: string; compact?: boolean; preselect?: string; suburb?: string }
+const { id = "help", title = "Request a callback", compact = false, preselect = "", suburb = "" } = Astro.props;
+const listId = `${id}-suburbs`;
+---
+<form class={`lead-form ${compact ? "lead-form--compact" : ""}`} id={id} data-lead-form novalidate aria-labelledby={`${id}-title`}>
+  <p class="lead-form__title" id={`${id}-title`}>{title}</p>
+  <p class="lead-form__intro">One licensed local plumber calls you back. Your details are not sent to a list of companies.</p>
+
+  <fieldset class="urgency">
+    <legend>How urgent is it?</legend>
+    <label><input type="radio" name="urgency" value="now" checked /><span>Right now</span></label>
+    <label><input type="radio" name="urgency" value="today" /><span>Today</span></label>
+    <label><input type="radio" name="urgency" value="quote" /><span>Just a quote</span></label>
+  </fieldset>
+
+  <div class="field">
+    <label for={`${id}-name`}>Your name</label>
+    <input id={`${id}-name`} name="name" type="text" autocomplete="name" required maxlength="80" />
+  </div>
+  <div class="field">
+    <label for={`${id}-phone`}>Mobile or phone</label>
+    <input id={`${id}-phone`} name="phone" type="tel" inputmode="tel" autocomplete="tel" required placeholder="04xx xxx xxx" maxlength="20" />
+  </div>
+  <div class="field">
+    <label for={`${id}-suburb`}>Suburb</label>
+    <input id={`${id}-suburb`} name="suburb" type="text" list={listId} autocomplete="address-level2" required maxlength="60" value={suburb || undefined} />
+    <datalist id={listId}>{ALL_SUBURBS.map((s) => <option value={s} />)}</datalist>
+  </div>
+  <div class="field">
+    <label for={`${id}-problem`}>What's blocked? <span class="optional">(optional)</span></label>
+    <select id={`${id}-problem`} name="problem">
+      <option value="">Choose one</option>
+      {PROBLEMS.map((p) => <option value={p.id} selected={p.id === preselect}>{p.label}</option>)}
+    </select>
+  </div>
+  {!compact && (
+    <div class="field">
+      <label for={`${id}-message`}>Anything else? <span class="optional">(optional)</span></label>
+      <textarea id={`${id}-message`} name="message" rows="2" maxlength="600"></textarea>
+    </div>
+  )}
+  <div class="hp" aria-hidden="true">
+    <label>Company<input type="text" name="company" tabindex="-1" autocomplete="off" /></label>
+  </div>
+  <button class="btn btn--primary btn--lg btn--block" type="submit">Request a callback</button>
+  <p class="lead-form__fine">By sending this you agree we can pass your details to one licensed local plumber so they can contact you. See our <a href="/privacy">privacy policy</a>.</p>
+  <p class="lead-form__status" role="status" aria-live="polite"></p>
+</form>
+
+<style>
+  .lead-form { color: var(--text); background: #fff; border-radius: var(--r-lg); padding: var(--s-32) var(--s-24) var(--s-24); box-shadow: var(--shadow-lg); border: 1px solid rgba(12,34,54,.06); display: grid; gap: var(--s-16); }
+  @media (min-width: 640px) { .lead-form { padding: var(--s-32); } }
+  .lead-form__title { font-family: var(--font-display); font-weight: 700; font-size: var(--fs-24); line-height: 1.15; letter-spacing: -.02em; margin: 0; color: var(--ink); }
+  .lead-form__intro { margin: calc(var(--s-8) * -1) 0 var(--s-4); font-size: var(--fs-16); line-height: 1.5; color: var(--muted); }
+  .urgency { border: 0; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-8); }
+  .urgency legend { font-weight: 600; font-size: var(--fs-14); color: var(--ink); margin-bottom: var(--s-8); padding: 0; }
+  .urgency label { position: relative; }
+  .urgency input { position: absolute; opacity: 0; inset: 0; cursor: pointer; margin: 0; }
+  .urgency span { display: grid; place-items: center; min-height: 44px; padding: 0 var(--s-4); text-align: center; border: 1.5px solid var(--line-strong); border-radius: var(--r-sm); font-weight: 600; font-size: var(--fs-14); color: var(--ink); cursor: pointer; transition: border-color .15s, background-color .15s; }
+  .urgency label:hover span { border-color: var(--ink); }
+  .urgency input:checked + span { border-color: var(--ink); background: var(--ink); color: #fff; }
+  .urgency input:focus-visible + span { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .field { display: grid; gap: var(--s-4); }
+  .field label { font-weight: 600; font-size: var(--fs-14); color: var(--ink); }
+  .optional { font-weight: 400; color: var(--muted); }
+  .field input, .field select, .field textarea { width: 100%; font: inherit; font-size: var(--fs-16); line-height: 1.4; min-height: 48px; padding: var(--s-12) var(--s-16); border: 1.5px solid var(--line-strong); border-radius: var(--r-sm); background: #fff; color: var(--text); transition: border-color .15s, box-shadow .15s; }
+  .field textarea { min-height: 80px; resize: vertical; }
+  .field input:hover, .field select:hover, .field textarea:hover { border-color: #9AA9B6; }
+  .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--teal); box-shadow: 0 0 0 4px rgba(21,122,128,.15); }
+  .field [aria-invalid="true"] { border-color: #B42318; box-shadow: 0 0 0 4px rgba(180,35,24,.1); }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .lead-form .btn { margin-top: var(--s-8); }
+  .lead-form__fine { font-size: .8125rem; line-height: 1.5; color: var(--muted); margin: 0; }
+  .lead-form__status { margin: 0; font-weight: 600; font-size: var(--fs-16); }
+  .lead-form__status:empty { display: none; }
+  .lead-form__status[data-state="error"] { color: #B42318; }
+  .lead-form__status[data-state="ok"] { color: var(--teal-700); }
+</style>

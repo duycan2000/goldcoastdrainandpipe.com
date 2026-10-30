@@ -1,0 +1,31 @@
+---
+// Navy page header for simple pages (About, Contact, Partner).
+interface Props { title: string; lede: string; crumb: string }
+const { title, lede, crumb } = Astro.props;
+---
+<section class="shero">
+  <div class="wrap shero__inner">
+    <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li aria-current="page">{crumb}</li></ol></nav>
+    <h1>{title}</h1>
+    <p>{lede}</p>
+    <slot />
+  </div>
+</section>
+
+<style>
+  .shero {
+    color: #D6E1EB;
+    background:
+      linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px) 0 0 / 28px 28px,
+      linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px) 0 0 / 28px 28px,
+      radial-gradient(120% 90% at 0% 0%, #1D4366 0%, var(--navy-800) 55%, var(--navy-900) 100%);
+    padding-block: var(--s-48) var(--s-64);
+  }
+  .shero__inner { display: grid; gap: var(--s-24); justify-items: start; }
+  .shero h1 { color: #fff; font-size: clamp(2.25rem, 5vw, var(--fs-48)); max-width: 18ch; }
+  .shero p { font-size: var(--fs-18); max-width: 58ch; }
+  .crumbs ol { list-style: none; padding: 0; margin: 0; display: flex; gap: var(--s-8); font-size: var(--fs-14); color: #9FB4C7; }
+  .crumbs li + li::before { content: "/"; margin-right: var(--s-8); color: #5E7A93; }
+  .crumbs a { color: #D6E1EB; text-decoration: none; }
+  .crumbs [aria-current] { color: #fff; }
+</style>

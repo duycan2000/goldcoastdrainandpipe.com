@@ -1,0 +1,73 @@
+---
+// Plumbing-plan style diagram: who owns which part of the sewer line on the Gold Coast.
+---
+<figure class="schematic">
+  <div class="schematic__scroll" tabindex="0" aria-label="Sewer responsibility diagram, scroll sideways on small screens">
+  <svg viewBox="0 0 720 300" role="img" aria-labelledby="sch-title sch-desc">
+    <title id="sch-title">Who is responsible for which part of the sewer</title>
+    <desc id="sch-desc">The property owner looks after the drains from the house to the property connection. The City of Gold Coast looks after the connection and the sewer main.</desc>
+    <defs>
+      <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="#C9E2E4" stroke-width="1"/></pattern>
+    </defs>
+    <rect width="720" height="300" fill="#EEF7F8"/>
+    <rect width="720" height="300" fill="url(#grid)"/>
+    <!-- ground -->
+    <path d="M0 110H720" stroke="#12304A" stroke-width="2"/>
+    <!-- house -->
+    <path d="M40 110V58l55-34 55 34v52" fill="#fff" stroke="#12304A" stroke-width="2"/>
+    <rect x="80" y="74" width="30" height="36" fill="#E3F1F2" stroke="#12304A" stroke-width="1.5"/>
+    <!-- owner zone -->
+    <rect x="20" y="128" width="440" height="150" rx="6" fill="none" stroke="#FF6A13" stroke-width="2" stroke-dasharray="7 6"/>
+    <text x="34" y="268" class="sch-zone sch-zone--owner">Your property: you pay</text>
+    <!-- council zone -->
+    <rect x="470" y="128" width="232" height="150" rx="6" fill="none" stroke="#1E7F86" stroke-width="2" stroke-dasharray="7 6"/>
+    <text x="484" y="268" class="sch-zone sch-zone--council">City of Gold Coast</text>
+    <!-- boundary -->
+    <path d="M465 40V290" stroke="#12304A" stroke-width="1.5" stroke-dasharray="3 5"/>
+    <text x="472" y="52" class="sch-label">Property boundary</text>
+    <!-- house drain -->
+    <path d="M110 110V170H520" fill="none" stroke="#12304A" stroke-width="10" stroke-linecap="round"/>
+    <path d="M110 110V170H520" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+    <!-- ORG -->
+    <path d="M230 170V104" stroke="#12304A" stroke-width="8"/>
+    <rect x="218" y="96" width="24" height="8" fill="#12304A"/>
+    <text x="200" y="62" class="sch-label">Overflow relief gully (ORG)</text>
+    <text x="200" y="78" class="sch-small">Overflows outside first, protecting the house</text>
+    <path d="M230 84V94" stroke="#12304A" stroke-width="1"/>
+    <!-- IO -->
+    <path d="M380 170V112" stroke="#12304A" stroke-width="6"/>
+    <rect x="372" y="104" width="16" height="8" fill="#12304A"/>
+    <text x="372" y="150" text-anchor="end" class="sch-small">Inspection opening</text>
+    <!-- connection -->
+    <circle cx="500" cy="170" r="9" fill="#1E7F86"/>
+    <text x="512" y="160" class="sch-small">Property connection</text>
+    <!-- sewer main -->
+    <path d="M520 170V215" stroke="#1E7F86" stroke-width="10"/>
+    <path d="M480 225H702" stroke="#1E7F86" stroke-width="16" stroke-linecap="round"/>
+    <text x="560" y="252" class="sch-label sch-label--council">Sewer main</text>
+    <!-- blockage marker -->
+    <g transform="translate(300 170)">
+      <circle r="13" fill="#FF6A13"/>
+      <path d="M-5 -5 5 5M5 -5-5 5" stroke="#12304A" stroke-width="2.4"/>
+    </g>
+    <text x="270" y="200" class="sch-small">Most blockages: roots, wipes, fat</text>
+  </svg>
+  </div>
+  <p class="schematic__hint">Swipe to see the whole diagram</p>
+  <figcaption>Based on City of Gold Coast guidance. The City looks after the sewer from the main to the property connection (or 1 m inside your boundary if the connection can't be found). Pipes on your side are the owner's responsibility.</figcaption>
+</figure>
+
+<style>
+  .schematic { margin: 0; }
+  .schematic__scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 8px; }
+  .schematic svg { width: 100%; min-width: 640px; height: auto; display: block; border-radius: 8px; border: 1px solid var(--line); }
+  .schematic__hint { display: none; font-size: .8rem; color: var(--muted); margin: .35rem 0 0; }
+  @media (max-width: 680px) { .schematic__hint { display: block; } }
+  .schematic :global(.sch-zone) { font: 700 15px var(--font-display); letter-spacing: .02em; }
+  .schematic :global(.sch-zone--owner) { fill: #C2410C; }
+  .schematic :global(.sch-zone--council) { fill: #155E63; }
+  .schematic :global(.sch-label) { font: 600 13px var(--font-body); fill: #12304A; }
+  .schematic :global(.sch-label--council) { fill: #155E63; }
+  .schematic :global(.sch-small) { font: 400 12px var(--font-body); fill: #3B4A57; }
+  .schematic figcaption { font-size: .85rem; color: var(--muted); margin-top: .55rem; }
+</style>

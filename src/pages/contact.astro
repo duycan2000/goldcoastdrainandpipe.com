@@ -1,0 +1,45 @@
+---
+import Base from "../layouts/Base.astro";
+import SimpleHero from "../components/SimpleHero.astro";
+import PhoneSign from "../components/PhoneSign.astro";
+import LeadForm from "../components/LeadForm.astro";
+import { SITE } from "../config";
+---
+<Base title={`Contact Us | ${SITE.brand}`} description="Call or request a callback from a licensed Gold Coast plumber for blocked drains, CCTV inspections and pipe relining." path="/contact">
+  <SimpleHero crumb="Contact" title="Contact us" lede="For a blocked drain, the fastest way is to call. If you can't talk now, leave your number and a licensed local plumber will ring you." />
+
+  <section class="pg">
+    <div class="wrap pg__grid">
+      <div class="pg__info">
+        <div>
+          <h2>Call a plumber</h2>
+          <p>Calls go to a licensed plumber who covers the Gold Coast.</p>
+        </div>
+        <PhoneSign />
+        <div class="pg__block">
+          <h3>Areas</h3>
+          <p>The whole City of Gold Coast, from Ormeau and Coomera in the north to Coolangatta in the south. See <a href="/#areas">all suburbs</a>.</p>
+        </div>
+        <div class="pg__block">
+          <h3>Not about a drain?</h3>
+          <p>For questions about this website, privacy or complaints, email <a href={`mailto:${SITE.email}`}>{SITE.email}</a>. This inbox isn't monitored for urgent jobs, so please call for those.</p>
+        </div>
+        <div class="pg__block">
+          <h3>Plumbers</h3>
+          <p>Licensed Gold Coast plumber interested in taking these calls? See <a href="/partner">partner with us</a>.</p>
+        </div>
+      </div>
+      <LeadForm id="help" title="Request a callback" />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .pg { padding-block: var(--s-64) var(--s-96); }
+  .pg__grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s-48); }
+  @media (min-width: 1000px) { .pg__grid { grid-template-columns: minmax(0, 1fr) minmax(0, .9fr); gap: var(--s-64); align-items: start; } }
+  .pg__info { display: grid; gap: var(--s-32); align-content: start; }
+  .pg__info > div:first-child { display: grid; gap: var(--s-8); }
+  .pg__block { display: grid; gap: var(--s-8); padding-top: var(--s-24); border-top: 1px solid var(--line); }
+  .pg__block p { color: var(--muted); font-size: var(--fs-16); }
+</style>

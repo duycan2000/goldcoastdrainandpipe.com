@@ -1,0 +1,69 @@
+---
+// Page to send to plumbers when offering the leads. Not indexed, not linked from the main menu.
+import Base from "../layouts/Base.astro";
+import SimpleHero from "../components/SimpleHero.astro";
+import Icon from "../components/Icon.astro";
+import { SITE } from "../config";
+---
+<Base title={`Partner With Us | ${SITE.brand}`} description="For licensed Gold Coast plumbers: exclusive blocked drain and pipe relining calls from local homeowners." path="/partner" noindex>
+  <SimpleHero crumb="Partner with us" title="Blocked drain calls for one Gold Coast plumber" lede="We bring in homeowners searching for blocked drain, CCTV and relining help on the Gold Coast. One licensed plumber gets those calls. They aren't shared with anyone else.">
+    <a class="btn btn--primary btn--lg" href={`mailto:${SITE.email}?subject=Partner%20enquiry`}>Email us about it</a>
+  </SimpleHero>
+
+  <section class="pg">
+    <div class="wrap">
+      <h2 class="pg__h2">How it works for you</h2>
+      <ol class="steps">
+        <li><h3>Homeowners find us on Google</h3><p>The site ranks for searches like blocked drains, pipe relining and CCTV drain inspection across the Gold Coast.</p></li>
+        <li><h3>Calls ring your phone</h3><p>Before you're connected, you hear a short message saying the call is from {SITE.brand}, so you know where the job came from.</p></li>
+        <li><h3>Callback requests come by SMS and email</h3><p>Name, phone, suburb, what's blocked and how urgent it is, filtered for spam and duplicates.</p></li>
+        <li><h3>You quote and do the job</h3><p>You deal with the customer directly. We don't take a cut of the job.</p></li>
+        <li><h3>Monthly report</h3><p>Every call and form, with call length and suburb, so you can see exactly what you're getting.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="pg pg--tint">
+    <div class="wrap pg__cols">
+      <div>
+        <h2 class="pg__h2">What we ask of partners</h2>
+        <ul class="ticks">
+          <li>Current QBCC licence for plumbing and drainage, and public liability insurance</li>
+          <li>Answer calls during business hours, or call back quickly</li>
+          <li>Agree the price with the customer before starting work</li>
+          <li>Treat customers well. The site makes these promises on your behalf</li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="pg__h2">How pricing works</h2>
+        <ul class="feat">
+          <li><span class="icon-tile"><Icon name="check" size={22} /></span><div><strong>Try it first</strong><span>Your first few leads are free so you can judge the quality.</span></div></li>
+          <li><span class="icon-tile"><Icon name="receipt" size={22} /></span><div><strong>Pay per lead or monthly</strong><span>A set price per genuine call or form, or a flat monthly fee once volume is steady.</span></div></li>
+          <li><span class="icon-tile"><Icon name="user" size={22} /></span><div><strong>Exclusive</strong><span>One plumber for the area. Calls aren't shared or auctioned.</span></div></li>
+        </ul>
+        <p class="note">Email <a href={`mailto:${SITE.email}`}>{SITE.email}</a> and we'll send current lead numbers for the Gold Coast.</p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .pg { padding-block: var(--s-64) var(--s-96); }
+  .pg--tint { background: var(--sand-50); }
+  .pg__h2 { margin-bottom: var(--s-32); font-size: var(--fs-36); }
+  .pg__cols { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s-48); }
+  @media (min-width: 900px) { .pg__cols { grid-template-columns: 1fr 1fr; gap: var(--s-64); } }
+  .steps { list-style: none; padding: 0; margin: 0; counter-reset: s; display: grid; gap: var(--s-32); max-width: 760px; }
+  .steps li { counter-increment: s; position: relative; padding-left: var(--s-64); display: grid; gap: var(--s-4); }
+  .steps li::before { content: counter(s); position: absolute; left: 0; top: -2px; width: 40px; height: 40px; border-radius: 50%; background: var(--ink); color: #fff; display: grid; place-items: center; font: 700 var(--fs-18)/1 var(--font-display); }
+  .steps h3 { font-size: var(--fs-18); }
+  .steps p { color: var(--muted); }
+  .ticks { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--s-12); }
+  .ticks li { position: relative; padding-left: var(--s-32); font-size: var(--fs-16); }
+  .ticks li::before { content: ""; position: absolute; left: 4px; top: .5em; width: 10px; height: 10px; border-radius: 3px; background: var(--teal); }
+  .feat { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--s-24); }
+  .feat li { display: flex; gap: var(--s-16); align-items: flex-start; }
+  .feat strong { display: block; color: var(--ink); }
+  .feat span:not(.icon-tile) { color: var(--muted); font-size: var(--fs-16); }
+  .note { margin-top: var(--s-32); font-size: var(--fs-16); color: var(--muted); }
+</style>

@@ -1,0 +1,21 @@
+---
+import Base from "../layouts/Base.astro";
+import { SITE } from "../config";
+---
+<Base title={`Terms of use | ${SITE.brand}`} description={`Terms for using ${SITE.brand}.`} path="/terms">
+  <section class="section">
+    <div class="wrap measure legal">
+      <h1>Terms of use</h1>
+      <p>Last updated: 28 October 2026</p>
+      <h2>What this service is</h2>
+      <p>{SITE.brand} is a referral service operated by {SITE.operator}. We don't carry out plumbing work. When you contact us, we pass your enquiry to an independent, licensed plumber who works directly with you.</p>
+      <h2>Quotes and work</h2>
+      <p>The plumber sets the price, does the work and is responsible for it. Agree the price with them before work starts. Any warranty on the work comes from the plumber.</p>
+      <h2>Information on this site</h2>
+      <p>Prices and guidance on this site are general information, based on published Australian price guides and public sources such as the City of Gold Coast and the Residential Tenancies Authority. They are not a quote and may not apply to your situation.</p>
+      <h2>Contact</h2>
+      <p>Email <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.</p>
+    </div>
+  </section>
+</Base>
+<style>.legal h1 { font-size: clamp(2.6rem, 6vw, 3.6rem); } .legal h2 { font-size: 1.7rem; margin-top: 1.8rem; }</style>

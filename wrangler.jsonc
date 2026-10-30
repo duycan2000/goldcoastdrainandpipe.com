@@ -1,0 +1,15 @@
+{
+  // Cloudflare Worker with static assets. Deploy: npm run build && npx wrangler deploy
+  "name": "gcdp-site",
+  "main": "worker/index.js",
+  "compatibility_date": "2026-10-01",
+  "assets": { "directory": "./dist", "binding": "ASSETS", "not_found_handling": "404-page" },
+  "vars": {
+    "PLATFORM_URL": "",   // e.g. https://duy-seo.<subdomain>.workers.dev
+    "SITE_ID": ""         // the site's id in R&R Portfolio
+  },
+  // LEAD_SECRET is a secret: npx wrangler secret put LEAD_SECRET
+  "d1_databases": [
+    { "binding": "DB", "database_name": "gcdp-leads", "database_id": "REPLACE_WITH_D1_ID" }
+  ]
+}

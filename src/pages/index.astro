@@ -1,0 +1,557 @@
+---
+import Base from "../layouts/Base.astro";
+import LeadForm from "../components/LeadForm.astro";
+import PhoneSign from "../components/PhoneSign.astro";
+import DrainSchematic from "../components/DrainSchematic.astro";
+import Icon from "../components/Icon.astro";
+import { SITE, PROBLEMS, AREAS, AREA_LINKS } from "../config";
+
+const title = "Blocked Drains Gold Coast | Licensed Local Drain Plumbers";
+const description = "Blocked drains on the Gold Coast? Call a licensed local plumber for blocked toilets, sewers and stormwater, CCTV drain inspections and no-dig pipe relining.";
+
+const faqs = [
+  {
+    q: "How much does it cost to clear a blocked drain on the Gold Coast?",
+    a: "Most standard blocked drains cost between $150 and $500 to clear, with around $320 typical, based on 2026 Australian price guides. A CCTV camera inspection with high-pressure jetting usually runs $350 to $1,100. The plumber confirms the price with you before starting, and after-hours call-outs can cost more.",
+  },
+  {
+    q: "Can a plumber come out today?",
+    a: "We pass your job to a local plumber as soon as you call or send the form. Same-day visits depend on how busy they are, so tell us if sewage is coming up inside or the overflow gully is spilling. Those jobs go first.",
+  },
+  {
+    q: "Is the blockage my responsibility or the council's?",
+    a: "The City of Gold Coast looks after the sewer from the main to your property connection, or one metre inside your boundary if the connection can't be found. Pipes on your side are the owner's responsibility. If the plumber finds the blockage is in the City's main, they report it on 1300 000 928 the same day and the City may reimburse up to $300 including GST.",
+  },
+  {
+    q: "I'm renting. Who pays for a blocked drain?",
+    a: "In Queensland a blocked or broken toilet is an emergency repair. Contact the emergency contact in your tenancy agreement first. If you can't reach them in reasonable time, you can arrange the repair yourself up to four weeks' rent and ask for reimbursement in writing. Other blocked drains are routine repairs to report to your property manager.",
+  },
+  {
+    q: "Do I need pipe relining?",
+    a: "Only if a CCTV inspection shows the pipe itself is cracked, broken or full of tree roots that keep coming back. Relining puts a new liner inside the old pipe, so there's usually no need to dig up your yard, driveway or garden.",
+  },
+  {
+    q: "Should I pour drain cleaner down a blocked drain?",
+    a: "Not when the drain is fully blocked. The chemical sits in the pipe, can damage older pipework and makes the job hazardous for the plumber. A plunger or hot (not boiling) water is safer for a slow sink or shower.",
+  },
+  {
+    q: "Who actually does the work?",
+    a: `${SITE.brand} is a referral service. An independent, licensed Gold Coast plumber does the work and agrees the price with you directly. You can check any plumber's licence on the QBCC licence register.`,
+  },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: SITE.brand,
+    url: SITE.url + "/",
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: SITE.brand,
+    url: SITE.url + "/",
+    logo: SITE.url + "/favicon.svg",
+    email: SITE.email,
+    areaServed: "Gold Coast QLD",
+    ...(SITE.phoneHref ? { telephone: SITE.phoneHref } : {}),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: "Blocked drain clearing, CCTV drain inspection and pipe relining",
+    serviceType: "Blocked drain plumbing",
+    url: SITE.url + "/",
+    areaServed: { "@type": "City", name: "Gold Coast", containedInPlace: { "@type": "State", name: "Queensland" } },
+    provider: { "@type": "Organization", name: SITE.brand, url: SITE.url, ...(SITE.phoneHref ? { telephone: SITE.phoneHref } : {}) },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+  },
+];
+import { getPosts, postUrl, srcset } from "../lib/blog";
+const guides = (await getPosts()).slice(0, 3);
+---
+<Base title={title} description={description} schema={schema}>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="wrap hero__grid">
+      <div class="hero__copy">
+        <h1>Blocked drains Gold Coast</h1>
+        <p class="hero__lede">Toilet backing up, gurgling drains or water pooling outside? One licensed local plumber clears blocked drains anywhere on the Gold Coast, from Coomera to Coolangatta.</p>
+        <div class="hero__actions">
+          <PhoneSign note={false} />
+          <a class="btn btn--on-dark btn--lg" href="#help">Request a callback</a>
+        </div>
+        <p class="hero__note">Free call from any Australian phone. Price agreed before any work starts.</p>
+      </div>
+      <div class="hero__form">
+        <LeadForm id="help" title="Get a plumber to call you" compact />
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust strip -->
+  <section class="trust" aria-label="Why people call us">
+    <div class="wrap trust__grid">
+      <ul class="trust__list">
+        <li><span class="icon-tile"><Icon name="shield" size={24} /></span><span><strong>Licensed in Queensland</strong>Every plumber holds a current QBCC licence</span></li>
+        <li><span class="icon-tile"><Icon name="receipt" size={24} /></span><span><strong>Price agreed first</strong>No work starts until you've said yes</span></li>
+        <li><span class="icon-tile"><Icon name="user" size={24} /></span><span><strong>One plumber, not three</strong>Your details aren't sold to a list</span></li>
+        <li><span class="icon-tile"><Icon name="camera" size={24} /></span><span><strong>Camera-checked fixes</strong>CCTV finds the cause when it keeps coming back</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- What's blocked -->
+  <section class="section section--tint" id="problems">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>What's blocked?</h2>
+        <p>Pick the closest match. It tells the plumber what to bring, so the first visit is more likely to fix it.</p>
+      </div>
+      <ul class="problems">
+        {PROBLEMS.map((p) => (
+          <li>
+            <a href={p.href}>
+              <span class="icon-tile"><Icon name={p.icon} size={26} /></span>
+              <span class="problems__text"><strong>{p.label}</strong><span>{p.hint}</span></span>
+              <svg class="problems__chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Emergency steps -->
+  <section class="section" id="right-now">
+    <div class="wrap split">
+      <div>
+        <div class="section-head">
+          <h2>Sewage coming up? Do this first</h2>
+          <p>These steps stop the damage spreading while the plumber is on the way.</p>
+        </div>
+        <ol class="steps">
+          <li><h3>Stop using water</h3><p>No flushing, showers, dishwasher or washing machine. Every litre has nowhere to go but up.</p></li>
+          <li><h3>Check the overflow relief gully</h3><p>It's the round grate in the ground outside, usually near the bathroom or laundry. If it's spilling or the cap has lifted, the blockage is in the main sewer line, not one fixture.</p></li>
+          <li><h3>Keep kids and pets away</h3><p>Sewage carries bacteria. Wash your hands after touching anything it reached.</p></li>
+          <li><h3>Skip chemical drain cleaners</h3><p>On a full blockage they sit in the pipe and make the job dangerous for the plumber.</p></li>
+          <li><h3>Call with your suburb and what's happening</h3><p>Renting? Tell your property manager or emergency contact too.</p></li>
+        </ol>
+      </div>
+      <aside class="urgent">
+        <h3>Call straight away if</h3>
+        <ul class="urgent__list">
+          <li>Sewage is coming up through a shower, floor drain or toilet</li>
+          <li>Several fixtures are blocked or slow at the same time</li>
+          <li>The overflow gully outside is overflowing</li>
+          <li>Water is heading towards walls, carpet or electrics</li>
+        </ul>
+        <PhoneSign label="Urgent? Call now" block />
+      </aside>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="section section--teal" id="how">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>How it works</h2>
+        <p>One call, one plumber, and you agree the price before anything is done.</p>
+      </div>
+      <ol class="flow">
+        <li><span class="flow__n">1</span><h3>Call or request a callback</h3><p>Tell us your suburb and what's blocked. It takes under a minute.</p></li>
+        <li><span class="flow__n">2</span><h3>A local plumber calls you</h3><p>They ask a few questions, confirm the price and tell you when they can be there.</p></li>
+        <li><span class="flow__n">3</span><h3>Found, cleared and checked</h3><p>Most drains clear with a jetter or eel. If it keeps coming back, a CCTV camera shows why before any bigger repair is quoted.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Prices -->
+  <section class="section" id="prices">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>What does it cost?</h2>
+        <p>Typical Australian prices for 2026. Your plumber gives you a firm price for your job before starting.</p>
+      </div>
+      <div class="price-grid">
+        <div class="price-card">
+          <div class="table-wrap">
+            <table class="prices">
+              <thead><tr><th scope="col">Job</th><th scope="col" class="num">Usual range</th><th scope="col" class="num">Typical</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Standard blocked drain clear</th><td class="num">$150–$500</td><td class="num">$320</td></tr>
+                <tr><th scope="row">CCTV inspection with high-pressure jetting</th><td class="num">$350–$1,100</td><td class="num">$700</td></tr>
+                <tr><th scope="row">Patch reline, one damaged section</th><td class="num">$300–$1,000</td><td class="num">per patch</td></tr>
+                <tr><th scope="row">Full pipe relining</th><td class="num">per metre</td><td class="num">$2,000+ first metre</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="small price-source">Ranges from 2026 Australian price guides by What's The Damage and Oneflare. After-hours and weekend call-outs can cost more. If the blockage is in the City's sewer main, see <a href="#responsibility">who pays</a>.</p>
+        </div>
+        <div class="price-factors">
+          <h3>What changes the price</h3>
+          <dl>
+            <dt>Where the blockage is</dt><dd>A toilet trap is quicker than a sewer line under the driveway.</dd>
+            <dt>Access</dt><dd>An inspection opening makes the job faster. Older homes without one can take longer.</dd>
+            <dt>What caused it</dt><dd>Wipes and fat usually clear in one visit. Tree roots or a broken pipe may need CCTV and repair.</dd>
+            <dt>Time of day</dt><dd>Nights, weekends and public holidays usually carry a higher call-out rate.</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Signs and causes -->
+  <section class="section section--tint" id="causes">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Signs of a blocked drain, and what causes them</h2>
+      </div>
+      <div class="two-col">
+        <div class="col">
+          <h3>Signs to watch for</h3>
+          <ul class="ticks">
+            <li>Toilet water rising or draining slowly after a flush</li>
+            <li>Gurgling from the toilet, shower or floor drain</li>
+            <li>Sink, shower and toilet slow at the same time, which points to the main line</li>
+            <li>A sewage smell inside or around outdoor drains</li>
+            <li>Wet patches or water around the overflow relief gully</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3>Common causes on the Gold Coast</h3>
+          <dl class="causes">
+            <dt>Tree roots</dt><dd>Roots push into the joints of older clay and earthenware sewer pipes, common in established suburbs.</dd>
+            <dt>Wet wipes, fat and sanitary items</dt><dd>They don't break down, even when the packet says flushable.</dd>
+            <dt>Storm debris</dt><dd>Heavy summer rain washes leaves, soil and sand into stormwater pits and downpipes.</dd>
+            <dt>Ageing or shifted pipes</dt><dd>Sags and cracks form where waste builds up.</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Clear vs reline -->
+  <section class="section" id="relining">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Clear it, inspect it, or reline it?</h2>
+        <p>Most blockages only need clearing. Relining is for damaged pipes, and a CCTV camera shows which one you have before you spend money. Read more about <a href="/drain-cleaning-gold-coast">drain cleaning</a>, <a href="/cctv-drain-inspection-gold-coast">CCTV inspections</a> and <a href="/pipe-relining-gold-coast">pipe relining</a>.</p>
+      </div>
+      <div class="options">
+        <article>
+          <span class="icon-tile"><Icon name="sink" size={24} /></span>
+          <h3>Drain clearing</h3>
+          <p class="options__what">A high-pressure jetter or electric eel breaks up and flushes the blockage.</p>
+          <dl>
+            <dt>Best for</dt><dd>Wipes, fat, hair, soil and small root growth</dd>
+            <dt>Digging</dt><dd>None</dd>
+            <dt>Usual time</dt><dd>About an hour</dd>
+          </dl>
+        </article>
+        <article>
+          <span class="icon-tile"><Icon name="camera" size={24} /></span>
+          <h3>CCTV inspection</h3>
+          <p class="options__what">A waterproof camera travels through the pipe and records what's inside.</p>
+          <dl>
+            <dt>Best for</dt><dd>Blockages that keep coming back, or checking drains before you buy</dd>
+            <dt>Digging</dt><dd>None</dd>
+            <dt>Usual time</dt><dd>About an hour, footage on the day</dd>
+          </dl>
+        </article>
+        <article>
+          <span class="icon-tile"><Icon name="roots" size={24} /></span>
+          <h3>Pipe relining</h3>
+          <p class="options__what">A resin liner is cured inside the old pipe, forming a new pipe within it.</p>
+          <dl>
+            <dt>Best for</dt><dd>Cracked, broken or root-damaged pipes</dd>
+            <dt>Digging</dt><dd>Usually none, through existing access points</dd>
+            <dt>Usual time</dt><dd>Often done in a day</dd>
+          </dl>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Responsibility -->
+  <section class="section section--teal" id="responsibility">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Who pays: you, the council or your landlord?</h2>
+      </div>
+      <div class="resp">
+        <DrainSchematic />
+        <div class="resp__text">
+          <div>
+            <h3>If the blockage is in the City's sewer</h3>
+            <p>Your plumber checks your private drain first, usually with CCTV. If the blockage is in the City of Gold Coast sewer main, the plumber reports it on 1300 000 928 the same day. The City may then reimburse the cost, usually capped at $300 including GST.</p>
+            <p class="small">Wet wipes and drains that don't meet the plumbing code aren't covered.</p>
+          </div>
+          <div>
+            <h3>If you're renting</h3>
+            <p>A blocked or broken toilet is an emergency repair under Queensland tenancy rules. Call the emergency contact in your agreement first. If you can't reach them in reasonable time, you can arrange the repair yourself, up to four weeks' rent, and ask to be reimbursed in writing.</p>
+            <p class="small">Other blocked drains are routine repairs. Report them to your property manager.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Who you deal with -->
+  <section class="section" id="about-service">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Who you're dealing with</h2>
+        <p>{SITE.brand} is a local referral service. We don't do the plumbing ourselves. We pass your job to one independent, licensed Gold Coast plumber, rather than sending your details to several companies at once.</p>
+      </div>
+      <ul class="promises">
+        <li><span class="icon-tile"><Icon name="shield" size={24} /></span><h3>A licence you can check</h3><p>Plumbing work in Queensland needs a QBCC licence. Ask your plumber for their number and look it up on the QBCC licence register.</p></li>
+        <li><span class="icon-tile"><Icon name="receipt" size={24} /></span><h3>Price before work</h3><p>The plumber tells you what the job will cost before starting. If they find a bigger problem, they explain it and quote it separately.</p></li>
+        <li><span class="icon-tile"><Icon name="user" size={24} /></span><h3>One phone call</h3><p>No bidding war and no flood of calls from strangers. One local plumber gets your job and calls you back.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Areas -->
+  <section class="section section--tint" id="areas">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Gold Coast suburbs we cover</h2>
+        <p>The whole City of Gold Coast, from the northern growth corridor to the border. Not on the list? Call anyway.</p>
+      </div>
+      <div class="areas">
+        {Object.entries(AREAS).map(([region, list]) => (
+          <div class="areas__group">
+            <h3><span class="icon-tile icon-tile--orange"><Icon name="pin" size={20} /></span>{region}</h3>
+            <ul>{list.map((s) => <li>{AREA_LINKS[s] ? <a href={AREA_LINKS[s]}>{s}</a> : s}</li>)}</ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" id="faq">
+    <div class="wrap faq-wrap">
+      <div class="section-head">
+        <h2>Questions people ask</h2>
+      </div>
+      <div class="faq">
+        {faqs.map((f, i) => (
+          <details open={i === 0}>
+            <summary>{f.q}<svg class="faq__chev" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Guides -->
+  <section class="section section--tint" id="guides">
+    <div class="wrap">
+      <div class="section-head guides-head">
+        <h2>Drain guides before you call</h2>
+        <a class="guides-all" href="/blog">All guides</a>
+      </div>
+      <ul class="guides">
+        {guides.map((g) => (
+          <li>
+            <a class="guide" href={postUrl(g)}>
+              <img src={g.data.image} srcset={srcset(g.data.image)} sizes="(min-width: 860px) 360px, calc(100vw - 32px)" alt={g.data.imageAlt} width="1200" height="630" loading="lazy" decoding="async" />
+              <span class="guide__title">{g.data.h1}</span>
+              <span class="guide__text">{g.data.excerpt}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Final call -->
+  <section class="section section--navy final" id="call">
+    <div class="wrap final__grid">
+      <div class="final__copy">
+        <h2>Blocked drain right now?</h2>
+        <p>Call and a licensed Gold Coast plumber takes it from there. Or leave your number and they'll ring you.</p>
+        <PhoneSign label="Call now" />
+      </div>
+      <LeadForm id="callback" title="Request a callback" />
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* Hero: navy plan-paper field, form card floats over the strip below */
+  .hero {
+    position: relative; color: #D6E1EB;
+    background:
+      linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px) 0 0 / 28px 28px,
+      linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px) 0 0 / 28px 28px,
+      radial-gradient(120% 90% at 0% 0%, #1D4366 0%, var(--navy-800) 55%, var(--navy-900) 100%);
+    padding-block: var(--s-48) var(--s-48);
+  }
+  @media (min-width: 1000px) { .hero { padding-block: var(--s-96) var(--s-64); } }
+  .hero__grid { display: grid; gap: var(--s-48); align-items: start; }
+  @media (min-width: 1000px) { .hero__grid { grid-template-columns: minmax(0, 1.2fr) minmax(0, .85fr); gap: var(--s-64); } }
+  .hero__copy { display: grid; gap: var(--s-24); align-content: start; padding-top: var(--s-16); }
+  .hero__kicker { display: inline-flex; align-items: center; gap: var(--s-8); font-size: var(--fs-14); font-weight: 600; color: #BFD0DF; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: #3DD68C; box-shadow: 0 0 0 4px rgba(61,214,140,.18); }
+  .hero h1 { color: #fff; max-width: 12ch; }
+  .hero__lede { font-size: var(--fs-20); line-height: 1.55; color: #D6E1EB; max-width: 46ch; }
+  @media (max-width: 640px) { .hero__lede { font-size: var(--fs-18); } }
+  .hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-16); margin-top: var(--s-8); }
+  .hero__actions .btn--lg { min-height: 76px; }
+  @media (max-width: 999px) { .hero__actions .btn--on-dark { display: none; } .hero__actions > .call, .hero__actions :global(.call) { width: 100%; } }
+  .hero__note { font-size: var(--fs-14); color: #9FB4C7; }
+  .hero__form { min-width: 0; position: relative; z-index: 2; }
+  @media (min-width: 1000px) { .hero__form { margin-bottom: -180px; } }
+
+  /* Trust strip */
+  .trust { background: #fff; border-bottom: 1px solid var(--line); padding-block: var(--s-32); }
+  @media (min-width: 1000px) {
+    .trust { padding-block: var(--s-48); }
+    .trust__grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .85fr); gap: var(--s-64); }
+  }
+  .trust__list { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--s-24); }
+  @media (min-width: 560px) { .trust__list { grid-template-columns: 1fr 1fr; gap: var(--s-24) var(--s-32); } }
+  .trust__list li { display: flex; gap: var(--s-16); align-items: flex-start; font-size: var(--fs-16); line-height: 1.45; color: var(--muted); }
+  .trust__list strong { display: block; color: var(--ink); font-weight: 650; margin-bottom: 2px; }
+
+  /* Problem tiles */
+  .problems { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--s-16); }
+  @media (min-width: 700px) { .problems { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1040px) { .problems { grid-template-columns: repeat(3, 1fr); gap: var(--s-24); } }
+  .problems a { display: flex; align-items: center; gap: var(--s-16); height: 100%; padding: var(--s-24); background: #fff; border: 1px solid var(--line); border-radius: var(--r-md); box-shadow: var(--shadow-sm); text-decoration: none; color: var(--text); transition: border-color .15s ease, box-shadow .15s ease, transform .15s ease; }
+  .problems a:hover { border-color: var(--line-strong); box-shadow: var(--shadow-md); transform: translateY(-1px); }
+  .problems__text { display: grid; gap: 2px; flex: 1; min-width: 0; }
+  .problems__text strong { color: var(--ink); font-size: var(--fs-18); font-weight: 650; line-height: 1.3; }
+  .problems__text span { color: var(--muted); font-size: var(--fs-14); line-height: 1.45; }
+  .problems__chev { color: var(--line-strong); flex-shrink: 0; transition: color .15s, transform .15s; }
+  .problems a:hover .problems__chev { color: var(--teal); transform: translateX(2px); }
+
+  /* Split */
+  .split { display: grid; gap: var(--s-48); align-items: start; }
+  .split > * { min-width: 0; }
+  @media (min-width: 1000px) { .split { grid-template-columns: minmax(0, 1.25fr) minmax(0, .85fr); gap: var(--s-64); } }
+
+  /* Steps: a real sequence */
+  .steps { list-style: none; padding: 0; margin: 0; counter-reset: s; display: grid; gap: var(--s-24); }
+  .steps li { counter-increment: s; position: relative; padding-left: var(--s-64); display: grid; gap: var(--s-4); }
+  .steps li::before { content: counter(s); position: absolute; left: 0; top: -2px; width: 40px; height: 40px; border-radius: 50%; background: var(--ink); color: #fff; display: grid; place-items: center; font: 700 var(--fs-18)/1 var(--font-display); }
+  .steps li:not(:last-child)::after { content: ""; position: absolute; left: 19px; top: 46px; bottom: calc(var(--s-24) * -1 + 6px); width: 2px; background: var(--line); }
+  .steps h3 { font-size: var(--fs-18); }
+  .steps p { color: var(--muted); max-width: 58ch; }
+
+  .urgent { background: #FFF5EE; border: 1px solid #F8D6C2; border-top: 4px solid var(--orange); border-radius: var(--r-md); padding: var(--s-32); display: grid; gap: var(--s-24); }
+  @media (min-width: 1000px) { .urgent { position: sticky; top: 104px; } }
+  .urgent__list { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--s-12); }
+  .urgent__list li { position: relative; padding-left: var(--s-32); font-size: var(--fs-16); line-height: 1.5; color: var(--text); }
+  .urgent__list li::before { content: "!"; position: absolute; left: 0; top: 1px; width: 22px; height: 22px; border-radius: 50%; background: var(--orange); color: var(--on-orange); font: 800 13px/22px var(--font-body); text-align: center; }
+
+  /* Flow */
+  .flow { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--s-32); position: relative; }
+  @media (min-width: 860px) {
+    .flow { grid-template-columns: repeat(3, 1fr); gap: var(--s-48); }
+    .flow::before { content: ""; position: absolute; top: 23px; left: 48px; right: 16%; height: 2px; background: repeating-linear-gradient(90deg, var(--teal) 0 10px, transparent 10px 18px); opacity: .5; }
+  }
+  .flow li { position: relative; display: grid; gap: var(--s-8); align-content: start; }
+  .flow__n { position: relative; z-index: 1; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: #fff; color: var(--ink); border: 2px solid var(--teal); font: 700 var(--fs-20)/1 var(--font-display); margin-bottom: var(--s-8); }
+  .flow p { color: var(--muted); }
+
+  /* Prices */
+  .price-grid { display: grid; gap: var(--s-32); align-items: start; }
+  .price-grid > * { min-width: 0; }
+  @media (min-width: 1000px) { .price-grid { grid-template-columns: minmax(0, 1.4fr) minmax(0, .8fr); gap: var(--s-64); } }
+  .price-card { background: #fff; border: 1px solid var(--line); border-radius: var(--r-lg); box-shadow: var(--shadow-md); padding: var(--s-8) var(--s-24) var(--s-24); }
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table { border-collapse: collapse; width: 100%; font-size: var(--fs-16); font-variant-numeric: tabular-nums; }
+  th, td { text-align: left; vertical-align: top; padding: var(--s-16) var(--s-12); border-bottom: 1px solid var(--line); }
+  thead th { font-size: var(--fs-14); font-weight: 600; color: var(--muted); padding-top: var(--s-16); }
+  tbody th { font-weight: 600; color: var(--ink); }
+  tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
+  .num { text-align: right; }
+  td.num { font-weight: 650; color: var(--ink); white-space: nowrap; }
+  td.num + td.num { font-weight: 500; color: var(--muted); }
+  @media (max-width: 560px) { th, td { padding: var(--s-12) var(--s-8); } td.num { white-space: normal; } }
+  .price-source { border-top: 1px solid var(--line); padding-top: var(--s-16); }
+  .price-factors { display: grid; gap: var(--s-16); }
+  .price-factors dl, .causes { margin: 0; }
+  .price-factors dt, .causes dt { font-weight: 650; color: var(--ink); font-size: var(--fs-16); }
+  .price-factors dd, .causes dd { margin: var(--s-4) 0 var(--s-24); color: var(--muted); font-size: var(--fs-16); line-height: 1.55; }
+  .price-factors dd:last-child, .causes dd:last-child { margin-bottom: 0; }
+
+  /* Signs and causes */
+  .two-col { display: grid; gap: var(--s-48); }
+  @media (min-width: 860px) { .two-col { grid-template-columns: 1fr 1fr; gap: var(--s-64); } }
+  .col { display: grid; gap: var(--s-16); align-content: start; }
+  .ticks { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--s-12); }
+  .ticks li { position: relative; padding-left: var(--s-32); font-size: var(--fs-16); line-height: 1.55; }
+  .ticks li::before { content: ""; position: absolute; left: 4px; top: .5em; width: 10px; height: 10px; border-radius: 3px; background: var(--teal); }
+
+  /* Options */
+  .options { display: grid; gap: var(--s-24); }
+  @media (min-width: 900px) { .options { grid-template-columns: repeat(3, 1fr); } }
+  .options article { display: grid; gap: var(--s-12); align-content: start; padding: var(--s-32) var(--s-24); background: #fff; border: 1px solid var(--line); border-radius: var(--r-lg); }
+  .options__what { color: var(--text); font-size: var(--fs-16); line-height: 1.55; }
+  .options dl { margin: var(--s-8) 0 0; padding-top: var(--s-16); border-top: 1px solid var(--line); display: grid; grid-template-columns: auto 1fr; gap: var(--s-8) var(--s-16); font-size: var(--fs-14); line-height: 1.5; }
+  .options dt { color: var(--muted); }
+  .options dd { margin: 0; color: var(--ink); font-weight: 550; }
+
+  /* Responsibility */
+  .resp { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s-48); align-items: start; }
+  .resp > * { min-width: 0; }
+  @media (min-width: 1000px) { .resp { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: var(--s-64); } }
+  .resp__text { display: grid; gap: var(--s-32); }
+  .resp__text > div { display: grid; gap: var(--s-12); }
+
+  /* Promises */
+  .promises { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--s-32); }
+  @media (min-width: 860px) { .promises { grid-template-columns: repeat(3, 1fr); gap: var(--s-48); } }
+  .promises li { display: grid; gap: var(--s-12); align-content: start; }
+  .promises li .icon-tile { margin-bottom: var(--s-4); }
+  .promises p { color: var(--muted); font-size: var(--fs-16); line-height: 1.6; }
+
+  /* Areas */
+  .areas { display: grid; gap: var(--s-32); }
+  @media (min-width: 860px) { .areas { grid-template-columns: repeat(3, 1fr); gap: var(--s-48); } }
+  .areas__group { display: grid; gap: var(--s-16); align-content: start; }
+  .areas h3 { display: flex; align-items: center; gap: var(--s-12); }
+  .areas h3 .icon-tile { width: 36px; height: 36px; border-radius: var(--r-sm); }
+  .areas ul { list-style: none; padding: 0; margin: 0; columns: 2; column-gap: var(--s-24); font-size: var(--fs-16); }
+  .areas li { padding: 3px 0; break-inside: avoid; color: var(--text); }
+  .areas li a { font-weight: 600; }
+
+  /* FAQ */
+  .faq-wrap { max-width: 880px; }
+  .faq { border-top: 1px solid var(--line); }
+  .faq details { border-bottom: 1px solid var(--line); }
+  .faq summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: var(--s-24); padding: var(--s-24) 0; font-weight: 650; font-size: var(--fs-18); line-height: 1.4; color: var(--ink); }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary:hover { color: var(--teal-700); }
+  .faq__chev { flex-shrink: 0; color: var(--teal); transition: transform .2s ease; }
+  .faq details[open] .faq__chev { transform: rotate(180deg); }
+  .faq details p { padding: 0 var(--s-48) var(--s-24) 0; color: var(--text); max-width: 70ch; }
+
+  /* Final CTA */
+  .final__grid { display: grid; gap: var(--s-48); align-items: center; }
+  .final__grid > * { min-width: 0; }
+  @media (min-width: 1000px) { .final__grid { grid-template-columns: minmax(0, 1fr) minmax(0, .85fr); gap: var(--s-64); } }
+  .final__copy { display: grid; gap: var(--s-24); justify-items: start; }
+  .final__copy p { font-size: var(--fs-20); max-width: 40ch; color: #D6E1EB; }
+  .guides-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: var(--s-16); max-width: none; }
+  .guides-all { font-weight: 650; color: var(--teal-700); }
+  .guides { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--s-32); }
+  @media (min-width: 860px) { .guides { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .guide { display: grid; gap: var(--s-12); align-content: start; color: var(--text); text-decoration: none; }
+  .guide img { width: 100%; height: auto; border-radius: var(--r-lg); border: 1px solid var(--line); }
+  .guide__title { font-family: var(--font-display); font-weight: 650; font-size: var(--fs-20); line-height: 1.25; color: var(--ink); }
+  .guide:hover .guide__title { text-decoration: underline; text-underline-offset: 4px; }
+  .guide__text { color: var(--muted); font-size: var(--fs-16); line-height: 1.55; }
+</style>

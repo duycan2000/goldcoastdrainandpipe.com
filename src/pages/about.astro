@@ -1,0 +1,58 @@
+---
+import Base from "../layouts/Base.astro";
+import SimpleHero from "../components/SimpleHero.astro";
+import PhoneSign from "../components/PhoneSign.astro";
+import Icon from "../components/Icon.astro";
+import { SITE } from "../config";
+---
+<Base title={`About Us | ${SITE.brand}`} description={`How ${SITE.brand} works: a Gold Coast referral service that connects you with one licensed local plumber, not a list of companies.`} path="/about">
+  <SimpleHero crumb="About" title="About Gold Coast Drain & Pipe" lede={`${SITE.brand} is a local referral service for blocked drains, CCTV inspections and pipe relining on the Gold Coast. We don't do the plumbing ourselves. We put you in touch with one licensed local plumber who does.`} />
+
+  <section class="pg">
+    <div class="wrap pg__grid">
+      <div class="pg__prose">
+        <h2>Why we work this way</h2>
+        <p>When your drain is blocked, you want one good plumber to call you back quickly. Many quote websites send your details to three or more companies at once, so you end up taking calls from strangers and comparing prices while sewage is coming up the shower.</p>
+        <p>We do it differently. Your call or callback request goes to one independent plumber who covers the Gold Coast. They talk to you directly, agree the price with you before starting, and do the work.</p>
+        <h2>What we check before working with a plumber</h2>
+        <ul class="ticks">
+          <li>A current QBCC licence for plumbing and drainage work, which you can look up on the QBCC licence register</li>
+          <li>Public liability insurance</li>
+          <li>The equipment for the jobs on this site: jetters, drain cameras and, for relining, a WaterMark-certified relining system</li>
+          <li>A commitment to agree the price with you before any work starts</li>
+        </ul>
+        <h2>Who runs this site</h2>
+        <p>{SITE.brand} is operated by {SITE.operator}. We run the website, the phone number and the callback form, and we pass enquiries to the plumber. The plumber quotes, does the work and is responsible for it.</p>
+        <h2>If something goes wrong</h2>
+        <p>Tell us at <a href={`mailto:${SITE.email}`}>{SITE.email}</a>. We'll raise it with the plumber, and we stop referring work to plumbers who don't treat customers well. For disputes about plumbing work in Queensland, you can also contact the QBCC.</p>
+      </div>
+      <aside class="pg__aside">
+        <ul class="promises">
+          <li><span class="icon-tile"><Icon name="user" size={24} /></span><div><strong>One plumber, not three</strong><span>Your details aren't sold to a list.</span></div></li>
+          <li><span class="icon-tile"><Icon name="shield" size={24} /></span><div><strong>Licence you can check</strong><span>Ask for the QBCC number and look it up.</span></div></li>
+          <li><span class="icon-tile"><Icon name="receipt" size={24} /></span><div><strong>Price before work</strong><span>Agreed with you before starting.</span></div></li>
+        </ul>
+        <PhoneSign block />
+      </aside>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .pg { padding-block: var(--s-64) var(--s-96); }
+  .pg__grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s-48); }
+  @media (min-width: 1000px) { .pg__grid { grid-template-columns: minmax(0, 1.4fr) minmax(0, .8fr); gap: var(--s-64); align-items: start; } }
+  .pg__prose { display: grid; gap: var(--s-16); max-width: 68ch; }
+  .pg__prose h2 { font-size: var(--fs-30); margin-top: var(--s-24); }
+  .pg__prose h2:first-child { margin-top: 0; }
+  .ticks { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--s-12); }
+  .ticks li { position: relative; padding-left: var(--s-32); font-size: var(--fs-16); }
+  .ticks li::before { content: ""; position: absolute; left: 4px; top: .5em; width: 10px; height: 10px; border-radius: 3px; background: var(--teal); }
+  .pg__aside { display: grid; gap: var(--s-32); background: var(--sand-50); border-radius: var(--r-lg); padding: var(--s-32) var(--s-24); }
+  @media (min-width: 1000px) { .pg__aside { position: sticky; top: 104px; } }
+  .promises { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--s-24); }
+  .promises li { display: flex; gap: var(--s-16); align-items: flex-start; }
+  .promises li > div { min-width: 0; }
+  .promises strong { display: block; color: var(--ink); }
+  .promises span:not(.icon-tile) { color: var(--muted); font-size: var(--fs-16); }
+</style>

@@ -1,0 +1,113 @@
+---
+import Base from "../layouts/Base.astro";
+import PhoneSign from "../components/PhoneSign.astro";
+import { SITE } from "../config";
+import { getPosts, postUrl, readingMinutes, fmtDate, topicOf, srcset } from "../lib/blog";
+
+const posts = await getPosts();
+const title = "Drain Guides: Blocked Drains & Pipe Relining Advice";
+const description = "Plain-English guides for Gold Coast homeowners on blocked drains and pipe relining: real 2026 costs, safe DIY fixes and when to call a licensed plumber.";
+const url = SITE.url + "/blog";
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Drain and pipe guides",
+    description,
+    url,
+    hasPart: posts.map((p) => ({ "@type": "BlogPosting", headline: p.data.h1, url: new URL(postUrl(p), SITE.url).toString() })),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: SITE.url + "/" },
+      { "@type": "ListItem", position: 2, name: "Guides", item: url },
+    ],
+  },
+];
+const [lead, ...rest] = posts;
+---
+<Base title={title} description={description} path="/blog" schema={schema}>
+  <header class="bhead">
+    <div class="wrap"><div class="bhead__inner">
+      <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li aria-current="page">Guides</li></ol></nav>
+      <h1>Drain and pipe guides for Gold Coast homes</h1>
+      <p>Straight answers on blocked drains, sewer problems and pipe relining. Real prices, safe fixes you can try yourself, and clear signs for when it's time to call a licensed plumber.</p>
+    </div></div>
+  </header>
+
+  <section class="wrap blist">
+    {lead && (
+      <a class="bcard bcard--lead" href={postUrl(lead)}>
+        <img src={lead.data.image} srcset={srcset(lead.data.image)} sizes="(min-width: 900px) 620px, calc(100vw - 32px)" alt={lead.data.imageAlt} width="1200" height="630" fetchpriority="high" decoding="async" />
+        <span class="bcard__body">
+          <span class="bcard__kicker">{topicOf(lead)}</span>
+          <h2 class="bcard__title">{lead.data.h1}</h2>
+          <span class="bcard__text">{lead.data.excerpt}</span>
+          <span class="bcard__meta">{fmtDate(lead.data.updated)} · {readingMinutes(lead)} min read</span>
+        </span>
+      </a>
+    )}
+    <ul class="bgrid">
+      {rest.map((p) => (
+        <li>
+          <a class="bcard" href={postUrl(p)}>
+            <img src={p.data.image} srcset={srcset(p.data.image)} sizes="(min-width: 1040px) 360px, (min-width: 760px) 50vw, calc(100vw - 32px)" alt={p.data.imageAlt} width="1200" height="630" loading="lazy" decoding="async" />
+            <span class="bcard__body">
+              <span class="bcard__kicker">{topicOf(p)}</span>
+              <h2 class="bcard__title">{p.data.h1}</h2>
+              <span class="bcard__text">{p.data.excerpt}</span>
+              <span class="bcard__meta">{fmtDate(p.data.updated)} · {readingMinutes(p)} min read</span>
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="bcall">
+    <div class="wrap bcall__inner">
+      <div>
+        <h2>Got a blocked drain right now?</h2>
+        <p>Skip the reading. Call and a licensed local plumber takes it from there, with a price agreed before any work starts.</p>
+      </div>
+      <PhoneSign label="Call now" />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .bhead { background: var(--sand-50); border-bottom: 1px solid var(--line); padding-block: var(--s-48); }
+  .bhead__inner { display: grid; gap: var(--s-16); max-width: 760px; }
+  .bhead h1 { font-size: clamp(2rem, 4.6vw, var(--fs-48)); }
+  .bhead p { font-size: var(--fs-20); line-height: 1.55; }
+  .crumbs ol { list-style: none; padding: 0; margin: 0; display: flex; gap: var(--s-8); font-size: var(--fs-14); color: var(--muted); }
+  .crumbs li + li::before { content: "/"; margin-right: var(--s-8); color: var(--line-strong); }
+  .crumbs a { color: var(--teal-700); text-decoration: none; }
+
+  .blist { padding-block: var(--s-48) var(--s-96); display: grid; gap: var(--s-32); }
+  .bgrid { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--s-32); }
+  @media (min-width: 760px) { .bgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 1040px) { .bgrid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .bcard { display: grid; gap: var(--s-16); align-content: start; height: 100%; color: var(--text); text-decoration: none; }
+  .bcard img { width: 100%; height: auto; border-radius: var(--r-lg); border: 1px solid var(--line); transition: box-shadow .15s; }
+  .bcard:hover img { box-shadow: var(--shadow-md); }
+  .bcard__body { display: grid; gap: var(--s-8); }
+  .bcard__kicker { font-size: var(--fs-14); font-weight: 650; color: var(--teal-700); }
+  .bcard__title { font-size: var(--fs-24); line-height: 1.2; }
+  .bcard:hover .bcard__title { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 2px; }
+  .bcard__text { color: var(--muted); font-size: var(--fs-16); line-height: 1.55; }
+  .bcard__meta { font-size: var(--fs-14); color: var(--muted); }
+  @media (min-width: 900px) {
+    .bcard--lead { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: var(--s-48); align-items: center; }
+    .bcard--lead .bcard__title { font-size: var(--fs-36); }
+    .bcard--lead .bcard__text { font-size: var(--fs-18); }
+  }
+
+  .bcall { background: var(--navy-800); color: #D6E1EB; padding-block: var(--s-64); }
+  .bcall__inner { display: grid; gap: var(--s-32); align-items: center; }
+  @media (min-width: 900px) { .bcall__inner { grid-template-columns: minmax(0, 1fr) auto; gap: var(--s-64); } }
+  .bcall h2 { color: #fff; margin-bottom: var(--s-12); }
+  .bcall p { font-size: var(--fs-18); max-width: 52ch; }
+</style>
