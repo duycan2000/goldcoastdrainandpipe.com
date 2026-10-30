@@ -70,5 +70,21 @@
   "/blog/is-pipe-relining-worth-it/lifespan.webp": {
     "w": 1200,
     "h": 600
+  },
+  "/img/home/hero-scene.webp": {
+    "w": 1280,
+    "h": 600
+  },
+  "/img/home/how-it-works.webp": {
+    "w": 1200,
+    "h": 360
+  },
+  "/img/home/cctv-before-after.webp": {
+    "w": 1200,
+    "h": 600
+  },
+  "/img/home/coverage-map.webp": {
+    "w": 840,
+    "h": 1016
   }
 }

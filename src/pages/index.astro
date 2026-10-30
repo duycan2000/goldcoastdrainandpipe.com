@@ -92,6 +92,9 @@ const guides = (await getPosts()).slice(0, 3);
       <div class="hero__form">
         <LeadForm id="help" title="Get a plumber to call you" compact />
       </div>
+      <figure class="hero__scene">
+        <img src="/img/home/hero-scene.webp" srcset="/img/home/hero-scene-600.webp 640w, /img/home/hero-scene.webp 1280w" sizes="(min-width: 1000px) 640px, calc(100vw - 32px)" width="1280" height="600" decoding="async" alt="Blocked drains Gold Coast: a plumber's camera finds tree roots in the sewer pipe under a home, with no digging" />
+      </figure>
     </div>
   </section>
 
@@ -164,6 +167,7 @@ const guides = (await getPosts()).slice(0, 3);
         <h2>How it works</h2>
         <p>One call, one plumber, and you agree the price before anything is done.</p>
       </div>
+      <img class="flow-art" src="/img/home/how-it-works.webp" srcset="/img/home/how-it-works-600.webp 600w, /img/home/how-it-works.webp 1200w" sizes="(min-width: 1160px) 1128px, calc(100vw - 32px)" width="1200" height="360" loading="lazy" decoding="async" alt="How it works: you call, a local Gold Coast plumber comes out, and the drain is cleared with the price agreed first" />
       <ol class="flow">
         <li><span class="flow__n">1</span><h3>Call or request a callback</h3><p>Tell us your suburb and what's blocked. It takes under a minute.</p></li>
         <li><span class="flow__n">2</span><h3>A local plumber calls you</h3><p>They ask a few questions, confirm the price and tell you when they can be there.</p></li>
@@ -244,6 +248,10 @@ const guides = (await getPosts()).slice(0, 3);
         <h2>Clear it, inspect it, or reline it?</h2>
         <p>Most blockages only need clearing. Relining is for damaged pipes, and a CCTV camera shows which one you have before you spend money. Read more about <a href="/drain-cleaning-gold-coast">drain cleaning</a>, <a href="/cctv-drain-inspection-gold-coast">CCTV inspections</a> and <a href="/pipe-relining-gold-coast">pipe relining</a>.</p>
       </div>
+      <figure class="cctv-art">
+        <img src="/img/home/cctv-before-after.webp" srcset="/img/home/cctv-before-after-600.webp 600w, /img/home/cctv-before-after.webp 1200w" sizes="(min-width: 1160px) 1128px, calc(100vw - 32px)" width="1200" height="600" loading="lazy" decoding="async" alt="Drain camera view of a Gold Coast sewer pipe: tree roots at a joint before, and a smooth relined pipe after" />
+        <figcaption>Illustration. Your plumber shows you the real camera footage of your own pipe before quoting a repair.</figcaption>
+      </figure>
       <div class="options">
         <article>
           <span class="icon-tile"><Icon name="sink" size={24} /></span>
@@ -321,6 +329,8 @@ const guides = (await getPosts()).slice(0, 3);
   <!-- Areas -->
   <section class="section section--tint" id="areas">
     <div class="wrap">
+      <div class="areas-layout">
+      <div>
       <div class="section-head">
         <h2>Gold Coast suburbs we cover</h2>
         <p>The whole City of Gold Coast, from the northern growth corridor to the border. Not on the list? Call anyway.</p>
@@ -332,6 +342,9 @@ const guides = (await getPosts()).slice(0, 3);
             <ul>{list.map((s) => <li>{AREA_LINKS[s] ? <a href={AREA_LINKS[s]}>{s}</a> : s}</li>)}</ul>
           </div>
         ))}
+      </div>
+      </div>
+      <img class="areas-map" src="/img/home/coverage-map.webp" srcset="/img/home/coverage-map-sm.webp 420w, /img/home/coverage-map.webp 840w" sizes="(min-width: 1000px) 400px, calc(100vw - 32px)" width="840" height="1016" loading="lazy" decoding="async" alt="Map of blocked drain plumber coverage across the Gold Coast, from Ormeau and Coomera to Coolangatta" />
       </div>
     </div>
   </section>
@@ -554,4 +567,24 @@ const guides = (await getPosts()).slice(0, 3);
   .guide__title { font-family: var(--font-display); font-weight: 650; font-size: var(--fs-20); line-height: 1.25; color: var(--ink); }
   .guide:hover .guide__title { text-decoration: underline; text-underline-offset: 4px; }
   .guide__text { color: var(--muted); font-size: var(--fs-16); line-height: 1.55; }
+  .hero__scene { margin: 0; min-width: 0; }
+  .hero__scene img { display: block; width: 100%; height: auto; }
+  @media (min-width: 1000px) {
+    .hero__grid { grid-template-rows: auto auto; }
+    .hero__copy { grid-column: 1; grid-row: 1; }
+    .hero__form { grid-column: 2; grid-row: 1 / span 2; }
+    .hero__scene { grid-column: 1; grid-row: 2; margin-top: calc(var(--s-24) * -1); margin-bottom: calc(var(--s-64) * -1); }
+  }
+  @media (max-width: 999px) { .hero__scene { margin-bottom: calc(var(--s-48) * -1); } }
+  .flow-art { display: none; width: 100%; height: auto; margin-bottom: var(--s-48); }
+  @media (min-width: 760px) { .flow-art { display: block; } }
+  .cctv-art { margin: 0 0 var(--s-48); }
+  .cctv-art img { display: block; width: 100%; height: auto; border-radius: var(--r-lg); border: 1px solid var(--line); }
+  .cctv-art figcaption { margin-top: var(--s-12); font-size: var(--fs-14); color: var(--muted); }
+  .areas-layout { display: grid; gap: var(--s-48); }
+  .areas-map { display: block; width: 100%; max-width: 460px; position: sticky; top: 96px; height: auto; border-radius: var(--r-lg); box-shadow: var(--shadow-md); }
+  @media (min-width: 1000px) {
+    .areas-layout { grid-template-columns: minmax(0, 1fr) 400px; gap: var(--s-64); align-items: start; }
+    .areas-layout .areas { grid-template-columns: 1fr; gap: var(--s-32); }
+  }
 </style>
